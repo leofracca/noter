@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>100</height>
+    <height>175</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,12 +20,6 @@
    </sizepolicy>
   </property>
   <property name="minimumSize">
-   <size>
-    <width>400</width>
-    <height>100</height>
-   </size>
-  </property>
-  <property name="maximumSize">
    <size>
     <width>400</width>
     <height>100</height>
@@ -62,10 +56,68 @@
       </layout>
      </item>
      <item>
-      <widget class="QCheckBox" name="UpLowLetters">
+      <widget class="QCheckBox" name="CaseSensitiveCB">
        <property name="text">
-        <string>Uppercase/Lowercase</string>
+        <string>Case Sensitive</string>
        </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="WholeWordsCB">
+       <property name="text">
+        <string>Whole Words</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="DirectionGroup">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="title">
+        <string>Direction</string>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <widget class="QRadioButton" name="BackwardBtn">
+            <property name="text">
+             <string>Backward</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">BackwardForwardGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="ForwardBtn">
+            <property name="text">
+             <string>Forward</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">BackwardForwardGroup</string>
+            </attribute>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
      </item>
     </layout>
@@ -74,4 +126,7 @@
  </widget>
  <resources/>
  <connections/>
+ <buttongroups>
+  <buttongroup name="BackwardForwardGroup"/>
+ </buttongroups>
 </ui>

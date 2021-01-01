@@ -9,6 +9,9 @@ FindDialog::FindDialog(QWidget *parent) :
 	ui(new Ui::FindDialog)
 {
 	ui->setupUi(this);
+
+	ui->BackwardForwardGroup->setId(ui->BackwardBtn, 0);
+	ui->BackwardForwardGroup->setId(ui->ForwardBtn, 1);
 }
 
 FindDialog::~FindDialog()
@@ -20,5 +23,5 @@ FindDialog::~FindDialog()
 void FindDialog::on_FindBtn_clicked()
 {
 	QString word = ui->FindLine->text();
-	emit sendWordToFind(word);
+	emit sendWordToFind(word, ui->CaseSensitiveCB->isChecked(), ui->WholeWordsCB->isChecked(), ui->BackwardForwardGroup->checkedId());
 }

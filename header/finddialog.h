@@ -17,10 +17,10 @@ public:
 private slots:
 	void on_FindBtn_clicked();
 
-signals:
-	void sendWordToFind(const QString word);
-
 private:
 	Ui::FindDialog *ui;
-};
 
+signals:
+	void sendWordToFind(const QString word, bool caseSensitive, bool wholeWords, int backwardOrForward);
+
+};

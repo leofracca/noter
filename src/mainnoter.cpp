@@ -24,11 +24,6 @@ MainNoter::~MainNoter()
 	delete ui;
 }
 
-QString MainNoter::getFileName()
-{
-	return name;
-}
-
 // CTRL + N or
 // File -> New File or
 // New toolbar icon
@@ -204,35 +199,34 @@ void MainNoter::on_actionRedo_triggered()
 void MainNoter::on_actionFind_triggered()
 {
 	FindDialog *findDialog = new FindDialog(this);
-	connect(findDialog, SIGNAL(sendWordToFind(QString)), this, SLOT(receiveWordToFind(QString)));
+	connect(findDialog, SIGNAL(sendWordToFind(QString, bool, bool, int)), this, SLOT(receiveWordToFind(QString, bool, bool, int)));
 	findDialog->setModal(false);
 	findDialog->show();
 }
 
-// Highlight the word(s) in the editor
-// The word(s) comes from findDialog
-void MainNoter::receiveWordToFind(const QString &word)
+// Highlight the word in the editor
+// The word comes from findDialog
+void MainNoter::receiveWordToFind(const QString &word, bool caseSensitive, bool wholeWords, int backwardOrForward)
 {
-	QTextDocument *document = ui->textNote->document();
-	QTextCursor cursor(document);
+	QTextCursor cursor = ui->textNote->textCursor();
 	bool found = false;
+	QTextDocument::FindFlags flags;
 
-	while (!cursor.isNull() && !cursor.atEnd())
-	{
-		cursor = document->find(word, cursor);
+	// Set the flags
+	if (caseSensitive)
+		flags |= QTextDocument::FindCaseSensitively;
+	if (wholeWords)
+		flags |= QTextDocument::FindWholeWords;
+	if (backwardOrForward == 0) // 0 means backward, 1 means forward
+		flags |= QTextDocument::FindBackward;
 
-		if (!cursor.isNull())
-		{
-			found = true;
-			ui->textNote->setTextCursor(cursor);
-		}
-	}
+	// Search
+	if (ui->textNote->find(word, flags))
+		found = true;
 
-	// The word(s) is/are not in this file
-	if (found == false)
-	{
+	// The word is not in the file
+	if (!found)
 		QMessageBox::information(this, "Warning!", "\"" + word + "\"" + " is not present in this file");
-	}
 }
 
 // CTRL + B or

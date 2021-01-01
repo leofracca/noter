@@ -17,8 +17,6 @@ public:
 	MainNoter(QWidget *parent = nullptr);
 	~MainNoter();
 
-	QString getFileName();
-
 private slots:
 	void on_actionNew_File_triggered();
 	void on_actionOpen_File_triggered();
@@ -39,7 +37,7 @@ private slots:
 	void on_actionZoom_out_triggered();
 	void on_actionDefault_zoom_triggered();
 	void on_actionFind_triggered();
-	void receiveWordToFind(const QString &word);
+	void receiveWordToFind(const QString &word, bool caseSensitive, bool wholeWords, int backwardOrForward);
 
 private:
 	Ui::MainNoter *ui;
