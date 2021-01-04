@@ -38,6 +38,9 @@ private slots:
 	void on_actionDefault_zoom_triggered();
 	void on_actionFind_triggered();
 	void receiveWordToFind(const QString &word, bool caseSensitive, bool wholeWords, int backwardOrForward);
+	void on_actionReplace_triggered();
+	void receiveWordsToReplace(const QString &oldWord, const QString &newWord, bool caseSensitive, bool wholeWords, int backwardOrForward);
+	void receiveWordsToReplaceAll(const QString &oldWord, const QString &newWord, bool caseSensitive, bool wholeWords);
 
 private:
 	Ui::MainNoter *ui;
@@ -46,6 +49,8 @@ private:
 	int zoomValue = 0; // If the text is bigger it is a positive number, otherwise negative
 
 	void showFilesInDir(QDir directory);
+	bool findWord(const QString &word, bool caseSensitive, bool wholeWords, int backwardOrForward);
+	bool replaceWord(const QString &oldWord, const QString &newWord, bool caseSensitive, bool wholeWords, int backwardOrForward);
 
 protected:
 	void wheelEvent(QWheelEvent *event);

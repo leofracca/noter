@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>175</height>
+    <height>172</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,11 +22,20 @@
   <property name="minimumSize">
    <size>
     <width>400</width>
-    <height>100</height>
+    <height>172</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>400</width>
+    <height>177</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Find</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -37,17 +46,17 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QLabel" name="FindLbl">
+        <widget class="QLabel" name="findLbl">
          <property name="text">
           <string>Find:</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="FindLine"/>
+        <widget class="QLineEdit" name="findLine"/>
        </item>
        <item>
-        <widget class="QPushButton" name="FindBtn">
+        <widget class="QPushButton" name="findBtn">
          <property name="text">
           <string>Find</string>
          </property>
@@ -56,21 +65,21 @@
       </layout>
      </item>
      <item>
-      <widget class="QCheckBox" name="CaseSensitiveCB">
+      <widget class="QCheckBox" name="caseSensitiveCB">
        <property name="text">
         <string>Case Sensitive</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="WholeWordsCB">
+      <widget class="QCheckBox" name="wholeWordsCB">
        <property name="text">
         <string>Whole Words</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="DirectionGroup">
+      <widget class="QGroupBox" name="directionGroup">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
          <horstretch>0</horstretch>
@@ -90,7 +99,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="QRadioButton" name="BackwardBtn">
+           <widget class="QRadioButton" name="backwardBtn">
             <property name="text">
              <string>Backward</string>
             </property>
@@ -98,12 +107,12 @@
              <bool>true</bool>
             </property>
             <attribute name="buttonGroup">
-             <string notr="true">BackwardForwardGroup</string>
+             <string notr="true">backwardForwardGroup</string>
             </attribute>
            </widget>
           </item>
           <item>
-           <widget class="QRadioButton" name="ForwardBtn">
+           <widget class="QRadioButton" name="forwardBtn">
             <property name="text">
              <string>Forward</string>
             </property>
@@ -111,7 +120,7 @@
              <bool>false</bool>
             </property>
             <attribute name="buttonGroup">
-             <string notr="true">BackwardForwardGroup</string>
+             <string notr="true">backwardForwardGroup</string>
             </attribute>
            </widget>
           </item>
@@ -127,6 +136,6 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="BackwardForwardGroup"/>
+  <buttongroup name="backwardForwardGroup"/>
  </buttongroups>
 </ui>

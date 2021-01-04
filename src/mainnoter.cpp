@@ -1,6 +1,7 @@
 #include "mainnoter.h"
 #include "ui_mainnoter.h"
 #include "finddialog.h"
+#include "replacedialog.h"
 
 #include <QFileDialog>
 #include <QFile>
@@ -17,6 +18,8 @@ MainNoter::MainNoter(QWidget *parent)
 
 	directoryPath = "C:/";
 	showFilesInDir(QDir("C:/"));
+
+	ui->textNote->setFocus();
 }
 
 MainNoter::~MainNoter()
@@ -199,34 +202,58 @@ void MainNoter::on_actionRedo_triggered()
 void MainNoter::on_actionFind_triggered()
 {
 	FindDialog *findDialog = new FindDialog(this);
-	connect(findDialog, SIGNAL(sendWordToFind(QString, bool, bool, int)), this, SLOT(receiveWordToFind(QString, bool, bool, int)));
+	connect(findDialog, SIGNAL(sendWordToFind(const QString &, bool, bool, int)), this, SLOT(receiveWordToFind(const QString &, bool, bool, int)));
 	findDialog->setModal(false);
 	findDialog->show();
 }
 
-// Highlight the word in the editor
-// The word comes from findDialog
-void MainNoter::receiveWordToFind(const QString &word, bool caseSensitive, bool wholeWords, int backwardOrForward)
+// CTRL + R or
+// Edit -> Replace
+void MainNoter::on_actionReplace_triggered()
 {
-	QTextCursor cursor = ui->textNote->textCursor();
-	bool found = false;
-	QTextDocument::FindFlags flags;
+	ReplaceDialog *replaceDialog = new ReplaceDialog(this);
+	connect(replaceDialog, SIGNAL(sendWordToFind(const QString &, bool, bool, int)), this, SLOT(receiveWordToFind(const QString &, bool, bool, int)));
+	connect(replaceDialog, SIGNAL(sendWordsToReplace(const QString &, const QString &, bool, bool, int)), this, SLOT(receiveWordsToReplace(const QString &, const QString &, bool, bool, int)));
+	connect(replaceDialog, SIGNAL(sendWordsToReplaceAll(const QString &, const QString &, bool, bool)), this, SLOT(receiveWordsToReplaceAll(const QString &, const QString &, bool, bool)));
+	replaceDialog->setModal(false);
+	replaceDialog->show();
+}
 
-	// Set the flags
-	if (caseSensitive)
-		flags |= QTextDocument::FindCaseSensitively;
-	if (wholeWords)
-		flags |= QTextDocument::FindWholeWords;
-	if (backwardOrForward == 0) // 0 means backward, 1 means forward
-		flags |= QTextDocument::FindBackward;
+// Replace the word with a new one
+// The word comes from replaceDialog
+void MainNoter::receiveWordsToReplace(const QString &oldWord, const QString &newWord, bool caseSensitive, bool wholeWords, int backwardOrForward)
+{
+	if (!replaceWord(oldWord, newWord, caseSensitive, wholeWords, backwardOrForward))
+		QMessageBox::information(this,
+								 "Warning!",
+								 "\"" + oldWord + "\""  + " is not present " + (backwardOrForward == 0 ? " backward" : " forward"));
+}
 
-	// Search
-	if (ui->textNote->find(word, flags))
-		found = true;
+// Replace all the occurrences of the word with a new one
+// The word comes from replaceDialog
+void MainNoter::receiveWordsToReplaceAll(const QString &oldWord, const QString &newWord, bool caseSensitive, bool wholeWords)
+{
+	ui->textNote->moveCursor(QTextCursor::Start);
+	bool repeat = false;
+
+	while (replaceWord(oldWord, newWord, caseSensitive, wholeWords, 1))
+		repeat = true;
 
 	// The word is not in the file
-	if (!found)
-		QMessageBox::information(this, "Warning!", "\"" + word + "\"" + " is not present in this file");
+	if (!repeat)
+		QMessageBox::information(this,
+								 "Warning!",
+								 "\"" + oldWord + "\""  + " is not present ");
+}
+
+// Highlight the word in the editor
+// The word comes from findDialog or replaceDialog
+void MainNoter::receiveWordToFind(const QString &word, bool caseSensitive, bool wholeWords, int backwardOrForward)
+{
+	if (!findWord(word, caseSensitive, wholeWords, backwardOrForward))
+		QMessageBox::information(this,
+								 "Warning!",
+								 "\"" + word + "\""  + " is not present " + (backwardOrForward == 0 ? " backward" : " forward"));
 }
 
 // CTRL + B or
@@ -308,6 +335,36 @@ void MainNoter::showFilesInDir(QDir directory)
 	}
 }
 
+bool MainNoter::findWord(const QString &word, bool caseSensitive, bool wholeWords, int backwardOrForward)
+{
+	QTextDocument::FindFlags flags;
+
+	// Set the flags
+	if (caseSensitive)
+		flags |= QTextDocument::FindCaseSensitively;
+	if (wholeWords)
+		flags |= QTextDocument::FindWholeWords;
+	if (backwardOrForward == 0) // 0 means backward, 1 means forward
+		flags |= QTextDocument::FindBackward;
+
+	// Search
+	if (ui->textNote->find(word, flags))
+		return true;
+
+	return false;
+}
+
+bool MainNoter::replaceWord(const QString &oldWord, const QString &newWord, bool caseSensitive, bool wholeWords, int backwardOrForward)
+{
+	if (findWord(oldWord, caseSensitive, wholeWords, backwardOrForward))
+	{
+		ui->textNote->textCursor().insertText(newWord);
+		return true;
+	}
+
+	return false;
+}
+
 // Zoom
 void MainNoter::wheelEvent(QWheelEvent *event)
 {
@@ -328,7 +385,7 @@ void MainNoter::wheelEvent(QWheelEvent *event)
 				zoomValue--;
 			}
 		}
-		qDebug() << zoomValue;
+		//qDebug() << zoomValue;
 	}
 }
 
@@ -359,5 +416,3 @@ void MainNoter::on_actionDefault_zoom_triggered()
 
 	zoomValue = 0;
 }
-
-

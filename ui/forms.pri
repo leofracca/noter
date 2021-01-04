@@ -1,3 +1,4 @@
 FORMS += \
-    ui/finddialog.ui \
-    ui/mainnoter.ui
+    $$PWD/replacedialog.ui \
+    $$PWD/finddialog.ui \
+    $$PWD/mainnoter.ui

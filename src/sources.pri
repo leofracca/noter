@@ -1,4 +1,5 @@
 SOURCES += \
-    src/finddialog.cpp \
-    src/main.cpp \
-    src/mainnoter.cpp
+    $$PWD/replacedialog.cpp \
+    $$PWD/finddialog.cpp \
+    $$PWD/main.cpp \
+    $$PWD/mainnoter.cpp

@@ -15,12 +15,12 @@ public:
 	~FindDialog();
 
 private slots:
-	void on_FindBtn_clicked();
+	void on_findBtn_clicked();
 
 private:
 	Ui::FindDialog *ui;
 
 signals:
-	void sendWordToFind(const QString word, bool caseSensitive, bool wholeWords, int backwardOrForward);
+	void sendWordToFind(const QString &word, bool caseSensitive, bool wholeWords, int backwardOrForward);
 
 };

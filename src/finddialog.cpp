@@ -1,8 +1,5 @@
 #include "finddialog.h"
 #include "ui_finddialog.h"
-#include "mainnoter.h"
-
-#include <QFile>
 
 FindDialog::FindDialog(QWidget *parent) :
 	QDialog(parent),
@@ -10,8 +7,9 @@ FindDialog::FindDialog(QWidget *parent) :
 {
 	ui->setupUi(this);
 
-	ui->BackwardForwardGroup->setId(ui->BackwardBtn, 0);
-	ui->BackwardForwardGroup->setId(ui->ForwardBtn, 1);
+	// Set the id's for the buttons 'backward' and 'forward'
+	ui->backwardForwardGroup->setId(ui->backwardBtn, 0);
+	ui->backwardForwardGroup->setId(ui->forwardBtn, 1);
 }
 
 FindDialog::~FindDialog()
@@ -20,8 +18,11 @@ FindDialog::~FindDialog()
 }
 
 // Send to the main window the selected word/phrase
-void FindDialog::on_FindBtn_clicked()
+void FindDialog::on_findBtn_clicked()
 {
-	QString word = ui->FindLine->text();
-	emit sendWordToFind(word, ui->CaseSensitiveCB->isChecked(), ui->WholeWordsCB->isChecked(), ui->BackwardForwardGroup->checkedId());
+	QString word = ui->findLine->text();
+	emit sendWordToFind(word,
+						ui->caseSensitiveCB->isChecked(),
+						ui->wholeWordsCB->isChecked(),
+						ui->backwardForwardGroup->checkedId());
 }

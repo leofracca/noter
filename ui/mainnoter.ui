@@ -59,9 +59,6 @@
        <property name="autoFillBackground">
         <bool>false</bool>
        </property>
-       <property name="frameShape">
-        <enum>QFrame::Panel</enum>
-       </property>
       </widget>
      </widget>
     </item>
@@ -159,7 +156,7 @@
   </widget>
   <action name="actionNew_File">
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/images/new.svg</normaloff>:/icons/images/new.svg</iconset>
    </property>
    <property name="text">
@@ -171,7 +168,7 @@
   </action>
   <action name="actionOpen_File">
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/images/open.svg</normaloff>:/icons/images/open.svg</iconset>
    </property>
    <property name="text">
@@ -183,7 +180,7 @@
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/images/save.svg</normaloff>:/icons/images/save.svg</iconset>
    </property>
    <property name="text">
@@ -203,7 +200,7 @@
   </action>
   <action name="actionCopy">
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/images/copy.svg</normaloff>:/icons/images/copy.svg</iconset>
    </property>
    <property name="text">
@@ -215,7 +212,7 @@
   </action>
   <action name="actionCut">
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/images/cut.svg</normaloff>:/icons/images/cut.svg</iconset>
    </property>
    <property name="text">
@@ -227,7 +224,7 @@
   </action>
   <action name="actionPaste">
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/images/paste.svg</normaloff>:/icons/images/paste.svg</iconset>
    </property>
    <property name="text">
@@ -258,7 +255,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/images/format_bold.svg</normaloff>:/icons/images/format_bold.svg</iconset>
    </property>
    <property name="text">
@@ -273,7 +270,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/images/format_italic.svg</normaloff>:/icons/images/format_italic.svg</iconset>
    </property>
    <property name="text">
@@ -293,7 +290,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="resources.qrc">
+    <iconset resource="../resources.qrc">
      <normaloff>:/icons/images/format_underlined.svg</normaloff>:/icons/images/format_underlined.svg</iconset>
    </property>
    <property name="text">
@@ -363,7 +360,7 @@
   </action>
  </widget>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../resources.qrc"/>
  </resources>
  <connections/>
 </ui>
