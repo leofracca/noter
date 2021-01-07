@@ -22,9 +22,10 @@ Noter includes the basic features that all text editors have.
 - Replace a word in a text
 
 ## WIP
+- Save all opened files
 
 ## TODO
-- Save all opened files
+- Font selections (type, size, ...)
 - About dialog
 
 ## Others
