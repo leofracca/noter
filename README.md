@@ -19,12 +19,14 @@ Noter includes the basic features that all text editors have.
 - Zoom-in and zoom-out
 - All the .txt and .xml files in the current directory are visible on a sidebar and it's possible to open them with a double click
 - Find a word in a text
-
-## WIP
 - Replace a word in a text
 
-## TODO
+## WIP
 - Save all opened files
+
+## TODO
+- Font selections (type, size, ...)
+- About dialog
 
 ## Others
 I made this project during my free time.
