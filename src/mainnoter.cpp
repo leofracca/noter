@@ -16,8 +16,8 @@ MainNoter::MainNoter(QWidget *parent)
 {
 	ui->setupUi(this);
 
-	directoryPath = "C:/";
-	showFilesInDir(QDir("C:/"));
+	directoryPath = QDir::homePath();
+	showFilesInDir(QDir(directoryPath));
 
 	ui->textNote->setFocus();
 }
@@ -32,6 +32,7 @@ MainNoter::~MainNoter()
 // New toolbar icon
 void MainNoter::on_actionNew_File_triggered()
 {
+	setWindowTitle(tr("Unnamed[*] - Main Noter"));
 	// Reset the name of the file
 	name = "";
 	// Clear the editor
@@ -46,7 +47,6 @@ void MainNoter::on_actionOpen_File_triggered()
 	QString filters = "Text File (*.txt) ;;"
 					  "XML File (*.xml)";
 
-	// TODO: made the directory general
 	QString fileName = QFileDialog::getOpenFileName(this, "Open", directoryPath, filters);
 	QFile file(fileName);
 	name = fileName;
@@ -60,8 +60,11 @@ void MainNoter::on_actionOpen_File_triggered()
 	QTextStream in(&file);
 	QString text = in.readAll();
 
+	setWindowTitle(tr("%1[*] - Main Noter").arg(QFileInfo(file).fileName()));
+
 	// Copy the text in the text editor
-	ui->textNote->setText(text);
+	ui->textNote->setPlainText(text);
+	//ui->textNote->setText(text);
 	file.close();
 }
 
@@ -79,13 +82,13 @@ void MainNoter::on_actionSave_triggered()
 						  "Text File (*.txt)";
 		QString selectedFilter = "Text File (*.txt)";
 
-		// TODO: made the directory general
 		QString fileName = QFileDialog::getSaveFileName(this, "Save", directoryPath, filters, &selectedFilter);
 		name = fileName;
 		file.setFileName(fileName);
 
 		// Update the list
-		ui->listNotes->addItem(file.fileName().split("/").last());
+		if (QFileInfo(file).absolutePath().compare(directoryPath) == 0)
+			ui->listNotes->addItem(file.fileName().split("/").last());
 	}
 	// If it is not the first time, don't create the file
 	else
@@ -96,6 +99,9 @@ void MainNoter::on_actionSave_triggered()
 	if (!file.open(QFile::WriteOnly | QFile::Text))
 		return;
 		//QMessageBox::warning(this, "Error!", "Error saving " + name);
+
+	setWindowTitle(tr("%1[*] - Main Noter").arg(QFileInfo(file).fileName()));
+	ui->textNote->document()->setModified(false);
 
 	QTextStream out(&file);
 	QString text = ui->textNote->toPlainText();
@@ -115,13 +121,13 @@ void MainNoter::on_actionSave_As_triggered()
 					  "XML File (*.xml)";
 	QString selectedFilter = "Text File (*.txt)";
 
-	// TODO: made the directory general
 	QString fileName = QFileDialog::getSaveFileName(this, "Save", directoryPath, filters, &selectedFilter);
 	name = fileName;
 	file.setFileName(fileName);
 
 	// Update the list
-	ui->listNotes->addItem(file.fileName().split("/").last());
+	if (QFileInfo(file).absolutePath().compare(directoryPath) == 0)
+		ui->listNotes->addItem(file.fileName().split("/").last());
 
 	// Check if it is possible to open the file correctly
 	// If it is, then open it
@@ -316,8 +322,11 @@ void MainNoter::on_listNotes_itemDoubleClicked(QListWidgetItem *item)
 	QTextStream in(&file);
 	QString text = in.readAll();
 
+	setWindowTitle(tr("%1[*] - Main Noter").arg(QFileInfo(file).fileName()));
+
 	// Copy the text in the text editor
-	ui->textNote->setText(text);
+	ui->textNote->setPlainText(text);
+	//ui->textNote->setText(text);
 	file.close();
 }
 
