@@ -27,6 +27,7 @@ Noter includes the basic features that all text editors have.
 ## TODO
 - Font selections (type, size, ...)
 - About dialog
+- Ask for exit if there are unsaved files
 
 ## Others
 I made this project during my free time.
