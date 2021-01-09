@@ -2,7 +2,7 @@
 <p align="center">
   <img src="https://img.shields.io/github/license/leofracca/noter">
   <img src="https://img.shields.io/badge/powered%20by-Qt-green">
-  <img src="https://img.shields.io/badge/status-alpha-blue">
+  <img src="https://img.shields.io/badge/status-beta-blue">
 </p>
 Noter is an open source text editor written in C++, using Qt.
 
