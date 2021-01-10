@@ -2,8 +2,8 @@
 #include "ui_replacedialog.h"
 
 ReplaceDialog::ReplaceDialog(QWidget *parent) :
-	QDialog(parent),
-	ui(new Ui::ReplaceDialog)
+    QDialog(parent),
+    ui(new Ui::ReplaceDialog)
 {
 	ui->setupUi(this);
 
@@ -22,9 +22,9 @@ void ReplaceDialog::on_findBtn_clicked()
 	QString word = ui->findLine->text();
 
 	emit sendWordToFind(word,
-						ui->caseSensitiveCB->isChecked(),
-						ui->wholeWordsCB->isChecked(),
-						ui->backwardForwardGroup->checkedId());
+	                    ui->caseSensitiveCB->isChecked(),
+	                    ui->wholeWordsCB->isChecked(),
+	                    ui->backwardForwardGroup->checkedId());
 }
 
 void ReplaceDialog::on_replaceBtn_clicked()
@@ -33,10 +33,10 @@ void ReplaceDialog::on_replaceBtn_clicked()
 	QString newWord = ui->replaceLine->text();
 
 	emit sendWordsToReplace(oldWord,
-							newWord,
-							ui->caseSensitiveCB->isChecked(),
-							ui->wholeWordsCB->isChecked(),
-							ui->backwardForwardGroup->checkedId());
+	                        newWord,
+	                        ui->caseSensitiveCB->isChecked(),
+	                        ui->wholeWordsCB->isChecked(),
+	                        ui->backwardForwardGroup->checkedId());
 }
 
 void ReplaceDialog::on_replaceAllBtn_clicked()
@@ -45,7 +45,7 @@ void ReplaceDialog::on_replaceAllBtn_clicked()
 	QString newWord = ui->replaceLine->text();
 
 	emit sendWordsToReplaceAll(oldWord,
-							   newWord,
-							   ui->caseSensitiveCB->isChecked(),
-							   ui->wholeWordsCB->isChecked());
+	                           newWord,
+	                           ui->caseSensitiveCB->isChecked(),
+	                           ui->wholeWordsCB->isChecked());
 }

@@ -12,8 +12,8 @@
 #include <QSettings>
 
 MainNoter::MainNoter(QWidget *parent)
-	: QMainWindow(parent)
-	, ui(new Ui::MainNoter)
+    : QMainWindow(parent)
+    , ui(new Ui::MainNoter)
 {
 	ui->setupUi(this);
 
@@ -53,7 +53,7 @@ void MainNoter::on_actionOpen_File_triggered()
 void MainNoter::openFile()
 {
 	QString filters = "Text File (*.txt) ;;"
-					  "XML File (*.xml)";
+	                  "XML File (*.xml)";
 
 	QString fileName = QFileDialog::getOpenFileName(this, "Open", directoryPath, filters);
 	QFile file(fileName);
@@ -74,7 +74,7 @@ void MainNoter::openOperations(QFile &file)
 	// Check if it is possible to open the file correctly
 	if (!file.open(QFile::ReadOnly | QFile::Text))
 		return;
-	//QMessageBox::warning(this, "Error!", "Error opening " + fileName);
+	    //QMessageBox::warning(this, "Error!", "Error opening " + fileName);
 
 	// Read the content of the file
 	QTextStream in(&file);
@@ -126,8 +126,8 @@ void MainNoter::saveAs()
 {
 	QFile file;
 	QString filters = "All File (*.*) ;;"
-					"Text File (*.txt) ;;"
-					"XML File (*.xml)";
+	                  "Text File (*.txt) ;;"
+	                  "XML File (*.xml)";
 	QString selectedFilter = "Text File (*.txt)";
 
 	QString fileName = QFileDialog::getSaveFileName(this, "Save", directoryPath, filters, &selectedFilter);
@@ -147,7 +147,7 @@ void MainNoter::saveOperations(QFile &file)
 	// If it is, then open it
 	if (!file.open(QFile::WriteOnly | QFile::Text))
 		return;
-		//QMessageBox::warning(this, "Error!", "Error saving " + name);
+	    //QMessageBox::warning(this, "Error!", "Error saving " + name);
 
 	setWindowTitle(tr("%1[*] - Main Noter").arg(QFileInfo(file).fileName()));
 	ui->textNote->document()->setModified(false);
@@ -243,8 +243,8 @@ void MainNoter::receiveWordsToReplace(const QString &oldWord, const QString &new
 {
 	if (!replaceWord(oldWord, newWord, caseSensitive, wholeWords, backwardOrForward))
 		QMessageBox::information(this,
-								 "Warning!",
-								 "\"" + oldWord + "\""  + " is not present " + (backwardOrForward == 0 ? " backward" : " forward"));
+		                         "Warning!",
+		                         "\"" + oldWord + "\""  + " is not present " + (backwardOrForward == 0 ? " backward" : " forward"));
 }
 
 // Replace all the occurrences of the word with a new one
@@ -260,8 +260,8 @@ void MainNoter::receiveWordsToReplaceAll(const QString &oldWord, const QString &
 	// The word is not in the file
 	if (!repeat)
 		QMessageBox::information(this,
-								 "Warning!",
-								 "\"" + oldWord + "\""  + " is not present ");
+		                         "Warning!",
+		                         "\"" + oldWord + "\""  + " is not present ");
 }
 
 // Highlight the word in the editor
@@ -270,8 +270,8 @@ void MainNoter::receiveWordToFind(const QString &word, bool caseSensitive, bool 
 {
 	if (!findWord(word, caseSensitive, wholeWords, backwardOrForward))
 		QMessageBox::information(this,
-								 "Warning!",
-								 "\"" + word + "\""  + " is not present " + (backwardOrForward == 0 ? " backward" : " forward"));
+		                         "Warning!",
+		                         "\"" + word + "\""  + " is not present " + (backwardOrForward == 0 ? " backward" : " forward"));
 }
 
 // CTRL + B or
@@ -352,10 +352,10 @@ void MainNoter::showFilesInDir(QDir directory)
 	for (QFileInfo var : directory.entryInfoList())
 	{
 		if (var.isFile() &&
-				(var.fileName().endsWith(".txt") ||
-				 var.fileName().endsWith(".xml")
-				 )
-			)
+		        (var.fileName().endsWith(".txt") ||
+		         var.fileName().endsWith(".xml")
+		         )
+		        )
 		{
 			ui->listNotes->addItem(var.fileName());
 		}
@@ -397,10 +397,9 @@ bool MainNoter::maybeSave()
 	if (!ui->textNote->document()->isModified())
 		return true;
 
-	const QMessageBox::StandardButton ret =
-			QMessageBox::warning(this, tr("Application"),
-								 tr("The document has been modified.\nDo you want to save your changes?"),
-								 QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+	const QMessageBox::StandardButton ret = QMessageBox::warning(this, tr("Application"),
+	                                                             tr("The document has been modified.\nDo you want to save your changes?"),
+	                                                             QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
 
 	switch (ret)
 	{
@@ -500,13 +499,13 @@ void MainNoter::on_actionAbout_Noter_triggered()
 {
 	QString translatedTextAboutQtCaption;
 	translatedTextAboutQtCaption = QMessageBox::tr(
-			"<h3>About Noter</h3>"
+	        "<h3>About Noter</h3>"
 			"<p>This program uses Qt version %1.</p>"
 			).arg(QLatin1String(QT_VERSION_STR));
 
 	QString translatedTextAboutQtText;
 	translatedTextAboutQtText = QMessageBox::tr(
-			"<p>Noter is an open source text editor written in C++, using Qt.<br />"
+	        "<p>Noter is an open source text editor written in C++, using Qt.<br />"
 			"With Noter you can work on text files and do the essential operations like create, open, modify or save a file.</p>"
 			"<p>Noter is available under the MIT License.</p>"
 			"<p>For the source code see <a href=\"https://github.com/leofracca/noter/\">the github repository</a>.</p>"

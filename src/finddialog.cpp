@@ -2,8 +2,8 @@
 #include "ui_finddialog.h"
 
 FindDialog::FindDialog(QWidget *parent) :
-	QDialog(parent),
-	ui(new Ui::FindDialog)
+    QDialog(parent),
+    ui(new Ui::FindDialog)
 {
 	ui->setupUi(this);
 
@@ -21,8 +21,9 @@ FindDialog::~FindDialog()
 void FindDialog::on_findBtn_clicked()
 {
 	QString word = ui->findLine->text();
+
 	emit sendWordToFind(word,
-						ui->caseSensitiveCB->isChecked(),
-						ui->wholeWordsCB->isChecked(),
-						ui->backwardForwardGroup->checkedId());
+	                    ui->caseSensitiveCB->isChecked(),
+	                    ui->wholeWordsCB->isChecked(),
+	                    ui->backwardForwardGroup->checkedId());
 }
