@@ -8,22 +8,22 @@ class ReplaceDialog;
 
 class ReplaceDialog : public QDialog
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit ReplaceDialog(QWidget *parent = nullptr);
-    ~ReplaceDialog();
+	explicit ReplaceDialog(QWidget *parent = nullptr);
+	~ReplaceDialog();
 
 private slots:
-    void on_findBtn_clicked();
-    void on_replaceBtn_clicked();
-    void on_replaceAllBtn_clicked();
+	void on_findBtn_clicked();
+	void on_replaceBtn_clicked();
+	void on_replaceAllBtn_clicked();
 
 private:
-    Ui::ReplaceDialog *ui;
+	Ui::ReplaceDialog *ui;
 
 signals:
-    void sendWordToFind(const QString &word, bool caseSensitive, bool wholeWords, int backwardOrForward);
-    void sendWordsToReplace(const QString &oldWord, const QString &newWord, bool caseSensitive, bool wholeWords, int backwardOrForward);
-    void sendWordsToReplaceAll(const QString &oldWord, const QString &newWord, bool caseSensitive, bool wholeWords);
+	void sendWordToFind(const QString &word, bool caseSensitive, bool wholeWords, int backwardOrForward);
+	void sendWordsToReplace(const QString &oldWord, const QString &newWord, bool caseSensitive, bool wholeWords, int backwardOrForward);
+	void sendWordsToReplaceAll(const QString &oldWord, const QString &newWord, bool caseSensitive, bool wholeWords);
 };

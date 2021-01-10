@@ -12,22 +12,22 @@
 #include <QSettings>
 
 MainNoter::MainNoter(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainNoter)
+	: QMainWindow(parent)
+	, ui(new Ui::MainNoter)
 {
-    ui->setupUi(this);
+	ui->setupUi(this);
 
-    loadSettings();
+	loadSettings();
 
-    showFilesInDir(QDir(directoryPath));
-    lastOpenedFile();
+	showFilesInDir(QDir(directoryPath));
+	lastOpenedFile();
 
-    ui->textNote->setFocus();
+	ui->textNote->setFocus();
 }
 
 MainNoter::~MainNoter()
 {
-    delete ui;
+	delete ui;
 }
 
 // CTRL + N or
@@ -35,11 +35,11 @@ MainNoter::~MainNoter()
 // New toolbar icon
 void MainNoter::on_actionNew_File_triggered()
 {
-    setWindowTitle(tr("Unnamed[*] - Main Noter"));
-    // Reset the name of the file
-    name = "";
-    // Clear the editor
-    ui->textNote->clear();
+	setWindowTitle(tr("Unnamed[*] - Main Noter"));
+	// Reset the name of the file
+	name = "";
+	// Clear the editor
+	ui->textNote->clear();
 }
 
 // CTRL + O or
@@ -47,44 +47,44 @@ void MainNoter::on_actionNew_File_triggered()
 // Open toolbar icon
 void MainNoter::on_actionOpen_File_triggered()
 {
-    openFile();
+	openFile();
 }
 
 void MainNoter::openFile()
 {
-    QString filters = "Text File (*.txt) ;;"
+	QString filters = "Text File (*.txt) ;;"
 					  "XML File (*.xml)";
 
-    QString fileName = QFileDialog::getOpenFileName(this, "Open", directoryPath, filters);
-    QFile file(fileName);
-    name = fileName;
+	QString fileName = QFileDialog::getOpenFileName(this, "Open", directoryPath, filters);
+	QFile file(fileName);
+	name = fileName;
 
-    openOperations(file);
+	openOperations(file);
 }
 
 void MainNoter::lastOpenedFile()
 {
-    QFile file(name);
+	QFile file(name);
 
-    openOperations(file);
+	openOperations(file);
 }
 
 void MainNoter::openOperations(QFile &file)
 {
-    // Check if it is possible to open the file correctly
-    if (!file.open(QFile::ReadOnly | QFile::Text))
-        return;
-    //QMessageBox::warning(this, "Error!", "Error opening " + fileName);
+	// Check if it is possible to open the file correctly
+	if (!file.open(QFile::ReadOnly | QFile::Text))
+		return;
+	//QMessageBox::warning(this, "Error!", "Error opening " + fileName);
 
-    // Read the content of the file
-    QTextStream in(&file);
-    QString text = in.readAll();
+	// Read the content of the file
+	QTextStream in(&file);
+	QString text = in.readAll();
 
-    setWindowTitle(tr("%1[*] - Main Noter").arg(QFileInfo(file).fileName()));
+	setWindowTitle(tr("%1[*] - Main Noter").arg(QFileInfo(file).fileName()));
 
-    // Copy the text in the text editor
-    ui->textNote->setPlainText(text);
-    file.close();
+	// Copy the text in the text editor
+	ui->textNote->setPlainText(text);
+	file.close();
 }
 
 // CTRL + S or
@@ -92,71 +92,71 @@ void MainNoter::openOperations(QFile &file)
 // Save toolbar icon
 void MainNoter::on_actionSave_triggered()
 {
-    // If it is the first time, create the file and open the saving dialog
-    if (name == "")
-        saveAs();
-    // If it is not the first time, don't create the file
-    else
-        save();
+	// If it is the first time, create the file and open the saving dialog
+	if (name == "")
+		saveAs();
+	// If it is not the first time, don't create the file
+	else
+		save();
 }
 
 // CTRL + Alt + S or
 // File -> Save As...
 void MainNoter::on_actionSave_As_triggered()
 {
-    saveAs();
+	saveAs();
 }
 
 // CTRL + Shift + S or
 // File -> Save All
 void MainNoter::on_actionSave_All_triggered()
 {
-    // TODO
+	// TODO
 }
 
 void MainNoter::save()
 {
-    QFile file;
-    file.setFileName(name);
+	QFile file;
+	file.setFileName(name);
 
-    saveOperations(file);
+	saveOperations(file);
 }
 
 void MainNoter::saveAs()
 {
-    QFile file;
-    QString filters = "All File (*.*) ;;"
-					  "Text File (*.txt) ;;"
-					  "XML File (*.xml)";
-    QString selectedFilter = "Text File (*.txt)";
+	QFile file;
+	QString filters = "All File (*.*) ;;"
+					"Text File (*.txt) ;;"
+					"XML File (*.xml)";
+	QString selectedFilter = "Text File (*.txt)";
 
-    QString fileName = QFileDialog::getSaveFileName(this, "Save", directoryPath, filters, &selectedFilter);
-    name = fileName;
-    file.setFileName(fileName);
+	QString fileName = QFileDialog::getSaveFileName(this, "Save", directoryPath, filters, &selectedFilter);
+	name = fileName;
+	file.setFileName(fileName);
 
-    // Update the list
-    if (QFileInfo(file).absolutePath().compare(directoryPath) == 0)
-        ui->listNotes->addItem(file.fileName().split("/").last());
+	// Update the list
+	if (QFileInfo(file).absolutePath().compare(directoryPath) == 0)
+		ui->listNotes->addItem(file.fileName().split("/").last());
 
-    saveOperations(file);
+	saveOperations(file);
 }
 
 void MainNoter::saveOperations(QFile &file)
 {
-    // Check if it is possible to open the file correctly
-    // If it is, then open it
-    if (!file.open(QFile::WriteOnly | QFile::Text))
-        return;
-    //QMessageBox::warning(this, "Error!", "Error saving " + name);
+	// Check if it is possible to open the file correctly
+	// If it is, then open it
+	if (!file.open(QFile::WriteOnly | QFile::Text))
+		return;
+		//QMessageBox::warning(this, "Error!", "Error saving " + name);
 
-    setWindowTitle(tr("%1[*] - Main Noter").arg(QFileInfo(file).fileName()));
-    ui->textNote->document()->setModified(false);
+	setWindowTitle(tr("%1[*] - Main Noter").arg(QFileInfo(file).fileName()));
+	ui->textNote->document()->setModified(false);
 
-    QTextStream out(&file);
-    QString text = ui->textNote->toPlainText();
-    out << text;
+	QTextStream out(&file);
+	QString text = ui->textNote->toPlainText();
+	out << text;
 
-    file.close();
+	file.close();
 }
 
 // It shows the files in the selected directory that the editor can open
@@ -164,15 +164,15 @@ void MainNoter::saveOperations(QFile &file)
 // File -> Open Directory
 void MainNoter::on_actionOpen_Directory_triggered()
 {
-    QString selectedDirectory = QFileDialog::getExistingDirectory(this, "Open Directory", directoryPath, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-    directoryPath = selectedDirectory;
-    QDir directory(directoryPath);
+	QString selectedDirectory = QFileDialog::getExistingDirectory(this, "Open Directory", directoryPath, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+	directoryPath = selectedDirectory;
+	QDir directory(directoryPath);
 
-    ui->listNotes->clear();
+	ui->listNotes->clear();
 
-    showFilesInDir(directory);
+	showFilesInDir(directory);
 
-    ui->textNote->clear();
+	ui->textNote->clear();
 }
 
 // CTRL + C or
@@ -180,7 +180,7 @@ void MainNoter::on_actionOpen_Directory_triggered()
 // Copy toolbar icon
 void MainNoter::on_actionCopy_triggered()
 {
-    ui->textNote->copy();
+	ui->textNote->copy();
 }
 
 // CTRL + X or
@@ -188,7 +188,7 @@ void MainNoter::on_actionCopy_triggered()
 // Cut toolbar icon
 void MainNoter::on_actionCut_triggered()
 {
-    ui->textNote->cut();
+	ui->textNote->cut();
 }
 
 // CTRL + V or
@@ -196,80 +196,82 @@ void MainNoter::on_actionCut_triggered()
 // Paste toolbar icon
 void MainNoter::on_actionPaste_triggered()
 {
-    ui->textNote->paste();
+	ui->textNote->paste();
 }
 
 // CTRL + Z or
 // Edit -> Undo
 void MainNoter::on_actionUndo_triggered()
 {
-    ui->textNote->undo();
+	ui->textNote->undo();
 }
 
 // CTRL + Y or
 // Edit -> Redo
 void MainNoter::on_actionRedo_triggered()
 {
-    ui->textNote->redo();
+	ui->textNote->redo();
 }
 
 // CTRL + F or
 // Edit -> Find
 void MainNoter::on_actionFind_triggered()
 {
-    FindDialog *findDialog = new FindDialog(this);
-    connect(findDialog, SIGNAL(sendWordToFind(const QString &, bool, bool, int)), this, SLOT(receiveWordToFind(const QString &, bool, bool, int)));
-    findDialog->setModal(false);
-    findDialog->show();
+	FindDialog *findDialog = new FindDialog(this);
+	connect(findDialog, SIGNAL(sendWordToFind(const QString &, bool, bool, int)), this, SLOT(receiveWordToFind(const QString &, bool, bool, int)));
+	findDialog->setModal(false);
+	findDialog->show();
 }
 
 // CTRL + R or
 // Edit -> Replace
 void MainNoter::on_actionReplace_triggered()
 {
-    ReplaceDialog *replaceDialog = new ReplaceDialog(this);
-    connect(replaceDialog, SIGNAL(sendWordToFind(const QString &, bool, bool, int)), this, SLOT(receiveWordToFind(const QString &, bool, bool, int)));
-    connect(replaceDialog, SIGNAL(sendWordsToReplace(const QString &, const QString &, bool, bool, int)), this, SLOT(receiveWordsToReplace(const QString &, const QString &, bool, bool, int)));
-    connect(replaceDialog, SIGNAL(sendWordsToReplaceAll(const QString &, const QString &, bool, bool)), this, SLOT(receiveWordsToReplaceAll(const QString &, const QString &, bool, bool)));
-    replaceDialog->setModal(false);
-    replaceDialog->show();
+	ReplaceDialog *replaceDialog = new ReplaceDialog(this);
+
+	connect(replaceDialog, SIGNAL(sendWordToFind(const QString &, bool, bool, int)), this, SLOT(receiveWordToFind(const QString &, bool, bool, int)));
+	connect(replaceDialog, SIGNAL(sendWordsToReplace(const QString &, const QString &, bool, bool, int)), this, SLOT(receiveWordsToReplace(const QString &, const QString &, bool, bool, int)));
+	connect(replaceDialog, SIGNAL(sendWordsToReplaceAll(const QString &, const QString &, bool, bool)), this, SLOT(receiveWordsToReplaceAll(const QString &, const QString &, bool, bool)));
+
+	replaceDialog->setModal(false);
+	replaceDialog->show();
 }
 
 // Replace the word with a new one
 // The word comes from replaceDialog
 void MainNoter::receiveWordsToReplace(const QString &oldWord, const QString &newWord, bool caseSensitive, bool wholeWords, int backwardOrForward)
 {
-    if (!replaceWord(oldWord, newWord, caseSensitive, wholeWords, backwardOrForward))
-        QMessageBox::information(this,
-                                 "Warning!",
-                                 "\"" + oldWord + "\""  + " is not present " + (backwardOrForward == 0 ? " backward" : " forward"));
+	if (!replaceWord(oldWord, newWord, caseSensitive, wholeWords, backwardOrForward))
+		QMessageBox::information(this,
+								 "Warning!",
+								 "\"" + oldWord + "\""  + " is not present " + (backwardOrForward == 0 ? " backward" : " forward"));
 }
 
 // Replace all the occurrences of the word with a new one
 // The word comes from replaceDialog
 void MainNoter::receiveWordsToReplaceAll(const QString &oldWord, const QString &newWord, bool caseSensitive, bool wholeWords)
 {
-    ui->textNote->moveCursor(QTextCursor::Start);
-    bool repeat = false;
+	ui->textNote->moveCursor(QTextCursor::Start);
+	bool repeat = false;
 
-    while (replaceWord(oldWord, newWord, caseSensitive, wholeWords, 1))
-        repeat = true;
+	while (replaceWord(oldWord, newWord, caseSensitive, wholeWords, 1))
+		repeat = true;
 
-    // The word is not in the file
-    if (!repeat)
-        QMessageBox::information(this,
-                                 "Warning!",
-                                 "\"" + oldWord + "\""  + " is not present ");
+	// The word is not in the file
+	if (!repeat)
+		QMessageBox::information(this,
+								 "Warning!",
+								 "\"" + oldWord + "\""  + " is not present ");
 }
 
 // Highlight the word in the editor
 // The word comes from findDialog or replaceDialog
 void MainNoter::receiveWordToFind(const QString &word, bool caseSensitive, bool wholeWords, int backwardOrForward)
 {
-    if (!findWord(word, caseSensitive, wholeWords, backwardOrForward))
-        QMessageBox::information(this,
-                                 "Warning!",
-                                 "\"" + word + "\""  + " is not present " + (backwardOrForward == 0 ? " backward" : " forward"));
+	if (!findWord(word, caseSensitive, wholeWords, backwardOrForward))
+		QMessageBox::information(this,
+								 "Warning!",
+								 "\"" + word + "\""  + " is not present " + (backwardOrForward == 0 ? " backward" : " forward"));
 }
 
 // CTRL + B or
@@ -277,14 +279,14 @@ void MainNoter::receiveWordToFind(const QString &word, bool caseSensitive, bool 
 // Bold toolbar icon
 void MainNoter::on_actionBold_triggered()
 {
-    QTextCharFormat format;
+	QTextCharFormat format;
 
-    if (ui->actionBold->isChecked())
-        format.setFontWeight(QFont::Bold);
-    else
-        format.setFontWeight(QFont::Normal);
+	if (ui->actionBold->isChecked())
+		format.setFontWeight(QFont::Bold);
+	else
+		format.setFontWeight(QFont::Normal);
 
-    ui->textNote->mergeCurrentCharFormat(format);
+	ui->textNote->mergeCurrentCharFormat(format);
 }
 
 // CTRL + I or
@@ -292,14 +294,14 @@ void MainNoter::on_actionBold_triggered()
 // Italic toolbar icon
 void MainNoter::on_actionItalic_triggered()
 {
-    QTextCharFormat format;
+	QTextCharFormat format;
 
-    if (ui->actionItalic->isChecked())
-        format.setFontItalic(true);
-    else
-        format.setFontItalic(false);
+	if (ui->actionItalic->isChecked())
+		format.setFontItalic(true);
+	else
+		format.setFontItalic(false);
 
-    ui->textNote->mergeCurrentCharFormat(format);
+	ui->textNote->mergeCurrentCharFormat(format);
 }
 
 // CTRL + U or
@@ -307,202 +309,214 @@ void MainNoter::on_actionItalic_triggered()
 // Underlined toolbar icon
 void MainNoter::on_actionUnderlined_triggered()
 {
-    QTextCharFormat format;
+	QTextCharFormat format;
 
-    if (ui->actionUnderlined->isChecked())
-        format.setFontUnderline(true);
-    else
-        format.setFontUnderline(false);
+	if (ui->actionUnderlined->isChecked())
+		format.setFontUnderline(true);
+	else
+		format.setFontUnderline(false);
 
-    ui->textNote->mergeCurrentCharFormat(format);
+	ui->textNote->mergeCurrentCharFormat(format);
 }
 
 // Double click an item on the list
 void MainNoter::on_listNotes_itemDoubleClicked(QListWidgetItem *item)
 {
-    // Open the double-clicked item
-    name = directoryPath + "/" + item->text();
-    QFile file(name);
+	if (maybeSave())
+	{
+		// Open the double-clicked item
+		name = directoryPath + "/" + item->text();
+		QFile file(name);
 
-    // Check if it is possible to open the file correctly
-    if (!file.open(QFile::ReadOnly | QFile::Text))
-        QMessageBox::warning(this, "Error!", "Error opening " + name);
+		// Check if it is possible to open the file correctly
+		if (!file.open(QFile::ReadOnly | QFile::Text))
+			QMessageBox::warning(this, "Error!", "Error opening " + name);
 
-    // Read the content of the file
-    QTextStream in(&file);
-    QString text = in.readAll();
+		// Read the content of the file
+		QTextStream in(&file);
+		QString text = in.readAll();
 
-    setWindowTitle(tr("%1[*] - Main Noter").arg(QFileInfo(file).fileName()));
+		setWindowTitle(tr("%1[*] - Main Noter").arg(QFileInfo(file).fileName()));
 
-    // Copy the text in the text editor
-    ui->textNote->setPlainText(text);
-    file.close();
+		// Copy the text in the text editor
+		ui->textNote->setPlainText(text);
+		file.close();
+	}
+	else
+		return;
 }
 
 // Fill the side list with the files in the directory
 void MainNoter::showFilesInDir(QDir directory)
 {
-    for (QFileInfo var : directory.entryInfoList())
-    {
-        if (var.isFile() &&
-                (var.fileName().endsWith(".txt") ||
-                 var.fileName().endsWith(".xml")))
-        {
-            ui->listNotes->addItem(var.fileName());
-        }
-    }
+	for (QFileInfo var : directory.entryInfoList())
+	{
+		if (var.isFile() &&
+				(var.fileName().endsWith(".txt") ||
+				 var.fileName().endsWith(".xml")
+				 )
+			)
+		{
+			ui->listNotes->addItem(var.fileName());
+		}
+	}
 }
 
 bool MainNoter::findWord(const QString &word, bool caseSensitive, bool wholeWords, int backwardOrForward)
 {
-    QTextDocument::FindFlags flags;
+	QTextDocument::FindFlags flags;
 
-    // Set the flags
-    if (caseSensitive)
-        flags |= QTextDocument::FindCaseSensitively;
-    if (wholeWords)
-        flags |= QTextDocument::FindWholeWords;
-    if (backwardOrForward == 0) // 0 means backward, 1 means forward
-        flags |= QTextDocument::FindBackward;
+	// Set the flags
+	if (caseSensitive)
+		flags |= QTextDocument::FindCaseSensitively;
+	if (wholeWords)
+		flags |= QTextDocument::FindWholeWords;
+	if (backwardOrForward == 0) // 0 means backward, 1 means forward
+		flags |= QTextDocument::FindBackward;
 
-    // Search
-    if (ui->textNote->find(word, flags))
-        return true;
+	// Search
+	if (ui->textNote->find(word, flags))
+		return true;
 
-    return false;
+	return false;
 }
 
 bool MainNoter::replaceWord(const QString &oldWord, const QString &newWord, bool caseSensitive, bool wholeWords, int backwardOrForward)
 {
-    if (findWord(oldWord, caseSensitive, wholeWords, backwardOrForward))
-    {
-        ui->textNote->textCursor().insertText(newWord);
-        return true;
-    }
+	if (findWord(oldWord, caseSensitive, wholeWords, backwardOrForward))
+	{
+		ui->textNote->textCursor().insertText(newWord);
+		return true;
+	}
 
-    return false;
+	return false;
 }
 
 bool MainNoter::maybeSave()
 {
-    if (!ui->textNote->document()->isModified())
-        return true;
+	if (!ui->textNote->document()->isModified())
+		return true;
 
-    const QMessageBox::StandardButton ret = QMessageBox::warning(this, tr("Application"),
-                                                                 tr("The document has been modified.\nDo you want to save your changes?"),
-                                                                 QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
-    switch (ret)
-    {
-    case QMessageBox::Save:
-        on_actionSave_triggered();
-        return true;
-    case QMessageBox::Cancel:
-        return false;
-    default:
-        break;
-    }
-    return true;
+	const QMessageBox::StandardButton ret =
+			QMessageBox::warning(this, tr("Application"),
+								 tr("The document has been modified.\nDo you want to save your changes?"),
+								 QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+
+	switch (ret)
+	{
+		case QMessageBox::Save:
+			on_actionSave_triggered();
+			return true;
+		case QMessageBox::Cancel:
+			return false;
+		default:
+			break;
+	}
+	return true;
 }
 
 void MainNoter::writeSettings()
 {
-    QSettings settings("NoterCompany", QCoreApplication::applicationName());
-    settings.setValue("geometry", this->geometry());
-    settings.setValue("directory", directoryPath);
-    settings.setValue("file", name);
+	QSettings settings("NoterCompany", QCoreApplication::applicationName());
+
+	settings.setValue("geometry", this->geometry());
+	settings.setValue("directory", directoryPath);
+	settings.setValue("file", name);
 }
 
 void MainNoter::loadSettings()
 {
-    QSettings settings("NoterCompany", QCoreApplication::applicationName());
-    setGeometry(settings.value("geometry").toRect());
-    directoryPath = settings.value("directory", QDir::homePath()).toString();
-    name = settings.value("file").toString();
+	QSettings settings("NoterCompany", QCoreApplication::applicationName());
+
+	setGeometry(settings.value("geometry").toRect());
+
+	directoryPath = settings.value("directory", QDir::homePath()).toString();
+	name = settings.value("file").toString();
 }
 
 // Zoom
 void MainNoter::wheelEvent(QWheelEvent *event)
 {
-    if (event->modifiers() == Qt::ControlModifier)
-    {
-        // Zoom in
-        if (event->angleDelta().y() > 0)
-        {
-            ui->textNote->zoomIn();
-            zoomValue++;
-        }
-        // Zoom out
-        else
-        {
-            if (zoomValue > -8) // -8 is the minimun zoom
-            {
-                ui->textNote->zoomOut();
-                zoomValue--;
-            }
-        }
-        //qDebug() << zoomValue;
-    }
+	if (event->modifiers() == Qt::ControlModifier)
+	{
+		// Zoom in
+		if (event->angleDelta().y() > 0)
+		{
+			ui->textNote->zoomIn();
+			zoomValue++;
+		}
+		// Zoom out
+		else
+		{
+			if (zoomValue > -8) // -8 is the minimun zoom
+			{
+				ui->textNote->zoomOut();
+				zoomValue--;
+			}
+		}
+		//qDebug() << zoomValue;
+	}
 }
 
 void MainNoter::closeEvent(QCloseEvent *event)
 {
-    writeSettings();
+	writeSettings();
 
-    if (maybeSave())
-        event->accept();
-    else
-        event->ignore();
+	if (maybeSave())
+		event->accept();
+	else
+		event->ignore();
 }
 
 // CTRL + + or
 // View -> Zoom in
 void MainNoter::on_actionZoom_in_triggered()
 {
-    ui->textNote->zoomIn();
-    zoomValue++;
+	ui->textNote->zoomIn();
+	zoomValue++;
 }
 
 // CTRL + - or
 // View -> Zoom out
 void MainNoter::on_actionZoom_out_triggered()
 {
-    ui->textNote->zoomOut();
-    zoomValue--;
+	ui->textNote->zoomOut();
+	zoomValue--;
 }
 
 // CTRL + 0 or
 // View -> Default zoom
 void MainNoter::on_actionDefault_zoom_triggered()
 {
-    if (zoomValue >= 0)
-        ui->textNote->zoomOut(zoomValue);
-    else
-        ui->textNote->zoomIn(zoomValue);
+	if (zoomValue >= 0)
+		ui->textNote->zoomOut(zoomValue);
+	else
+		ui->textNote->zoomIn(zoomValue);
 
-    zoomValue = 0;
+	zoomValue = 0;
 }
 
 void MainNoter::on_actionAbout_Noter_triggered()
 {
-    QString translatedTextAboutQtCaption;
-    translatedTextAboutQtCaption = QMessageBox::tr(
-                "<h3>About Noter</h3>"
+	QString translatedTextAboutQtCaption;
+	translatedTextAboutQtCaption = QMessageBox::tr(
+			"<h3>About Noter</h3>"
 			"<p>This program uses Qt version %1.</p>"
 			).arg(QLatin1String(QT_VERSION_STR));
 
-    QString translatedTextAboutQtText;
-    translatedTextAboutQtText = QMessageBox::tr(
-                "<p>Noter is an open source text editor written in C++, using Qt.<br />"
+	QString translatedTextAboutQtText;
+	translatedTextAboutQtText = QMessageBox::tr(
+			"<p>Noter is an open source text editor written in C++, using Qt.<br />"
 			"With Noter you can work on text files and do the essential operations like create, open, modify or save a file.</p>"
 			"<p>Noter is available under the MIT License.</p>"
 			"<p>For the source code see <a href=\"https://github.com/leofracca/noter/\">the github repository</a>.</p>"
 			);
 
-    QMessageBox *msgBox = new QMessageBox(this);
-    msgBox->setAttribute(Qt::WA_DeleteOnClose);
-    msgBox->setWindowTitle(tr("About Noter"));
-    msgBox->setText(translatedTextAboutQtCaption);
-    msgBox->setInformativeText(translatedTextAboutQtText);
+	QMessageBox *msgBox = new QMessageBox(this);
+	msgBox->setAttribute(Qt::WA_DeleteOnClose);
+	msgBox->setWindowTitle(tr("About Noter"));
+	msgBox->setText(translatedTextAboutQtCaption);
+	msgBox->setInformativeText(translatedTextAboutQtText);
 
-    msgBox->show();
+	msgBox->show();
 }
