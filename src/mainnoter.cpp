@@ -9,6 +9,7 @@
 #include <QMessageBox>
 #include <QBoxLayout>
 #include <QTextCursor>
+#include <QSettings>
 
 MainNoter::MainNoter(QWidget *parent)
 	: QMainWindow(parent)
@@ -16,8 +17,10 @@ MainNoter::MainNoter(QWidget *parent)
 {
 	ui->setupUi(this);
 
-	directoryPath = QDir::homePath();
+	loadSettings();
+
 	showFilesInDir(QDir(directoryPath));
+	lastOpenedFile();
 
 	ui->textNote->setFocus();
 }
@@ -44,6 +47,11 @@ void MainNoter::on_actionNew_File_triggered()
 // Open toolbar icon
 void MainNoter::on_actionOpen_File_triggered()
 {
+	openFile();
+}
+
+void MainNoter::openFile()
+{
 	QString filters = "Text File (*.txt) ;;"
 					  "XML File (*.xml)";
 
@@ -51,6 +59,18 @@ void MainNoter::on_actionOpen_File_triggered()
 	QFile file(fileName);
 	name = fileName;
 
+	openOperations(file);
+}
+
+void MainNoter::lastOpenedFile()
+{
+	QFile file(name);
+
+	openOperations(file);
+}
+
+void MainNoter::openOperations(QFile &file)
+{
 	// Check if it is possible to open the file correctly
 	if (!file.open(QFile::ReadOnly | QFile::Text))
 		return;
@@ -64,7 +84,6 @@ void MainNoter::on_actionOpen_File_triggered()
 
 	// Copy the text in the text editor
 	ui->textNote->setPlainText(text);
-	//ui->textNote->setText(text);
 	file.close();
 }
 
@@ -73,27 +92,57 @@ void MainNoter::on_actionOpen_File_triggered()
 // Save toolbar icon
 void MainNoter::on_actionSave_triggered()
 {
-	QFile file;
-
 	// If it is the first time, create the file and open the saving dialog
 	if (name == "")
-	{
-		QString filters = "All File (*.*) ;;"
-						  "Text File (*.txt)";
-		QString selectedFilter = "Text File (*.txt)";
-
-		QString fileName = QFileDialog::getSaveFileName(this, "Save", directoryPath, filters, &selectedFilter);
-		name = fileName;
-		file.setFileName(fileName);
-
-		// Update the list
-		if (QFileInfo(file).absolutePath().compare(directoryPath) == 0)
-			ui->listNotes->addItem(file.fileName().split("/").last());
-	}
+		saveAs();
 	// If it is not the first time, don't create the file
 	else
-		file.setFileName(name);
+		save();
+}
 
+// CTRL + Alt + S or
+// File -> Save As...
+void MainNoter::on_actionSave_As_triggered()
+{
+	saveAs();
+}
+
+// CTRL + Shift + S or
+// File -> Save All
+void MainNoter::on_actionSave_All_triggered()
+{
+	// TODO
+}
+
+void MainNoter::save()
+{
+	QFile file;
+	file.setFileName(name);
+
+	saveOperations(file);
+}
+
+void MainNoter::saveAs()
+{
+	QFile file;
+	QString filters = "All File (*.*) ;;"
+					  "Text File (*.txt) ;;"
+					  "XML File (*.xml)";
+	QString selectedFilter = "Text File (*.txt)";
+
+	QString fileName = QFileDialog::getSaveFileName(this, "Save", directoryPath, filters, &selectedFilter);
+	name = fileName;
+	file.setFileName(fileName);
+
+	// Update the list
+	if (QFileInfo(file).absolutePath().compare(directoryPath) == 0)
+		ui->listNotes->addItem(file.fileName().split("/").last());
+
+	saveOperations(file);
+}
+
+void MainNoter::saveOperations(QFile &file)
+{
 	// Check if it is possible to open the file correctly
 	// If it is, then open it
 	if (!file.open(QFile::WriteOnly | QFile::Text))
@@ -108,45 +157,6 @@ void MainNoter::on_actionSave_triggered()
 	out << text;
 
 	file.close();
-}
-
-// CTRL + Alt + S or
-// File -> Save As...
-void MainNoter::on_actionSave_As_triggered()
-{
-	QFile file;
-
-	QString filters = "All File (*.*) ;;"
-					  "Text File (*.txt) ;;"
-					  "XML File (*.xml)";
-	QString selectedFilter = "Text File (*.txt)";
-
-	QString fileName = QFileDialog::getSaveFileName(this, "Save", directoryPath, filters, &selectedFilter);
-	name = fileName;
-	file.setFileName(fileName);
-
-	// Update the list
-	if (QFileInfo(file).absolutePath().compare(directoryPath) == 0)
-		ui->listNotes->addItem(file.fileName().split("/").last());
-
-	// Check if it is possible to open the file correctly
-	// If it is, then open it
-	if (!file.open(QFile::WriteOnly | QFile::Text))
-		return;
-		//QMessageBox::warning(this, "Error!", "Error saving " + name);
-
-	QTextStream out(&file);
-	QString text = ui->textNote->toPlainText();
-	out << text;
-
-	file.close();
-}
-
-// CTRL + Shift + S or
-// File -> Save All
-void MainNoter::on_actionSave_All_triggered()
-{
-	// TODO
 }
 
 // It shows the files in the selected directory that the editor can open
@@ -326,7 +336,6 @@ void MainNoter::on_listNotes_itemDoubleClicked(QListWidgetItem *item)
 
 	// Copy the text in the text editor
 	ui->textNote->setPlainText(text);
-	//ui->textNote->setText(text);
 	file.close();
 }
 
@@ -374,6 +383,43 @@ bool MainNoter::replaceWord(const QString &oldWord, const QString &newWord, bool
 	return false;
 }
 
+bool MainNoter::maybeSave()
+{
+	if (!ui->textNote->document()->isModified())
+		return true;
+
+	const QMessageBox::StandardButton ret = QMessageBox::warning(this, tr("Application"),
+																 tr("The document has been modified.\nDo you want to save your changes?"),
+																 QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+	switch (ret)
+	{
+		case QMessageBox::Save:
+			on_actionSave_triggered();
+			return true;
+		case QMessageBox::Cancel:
+			return false;
+		default:
+			break;
+	}
+	return true;
+}
+
+void MainNoter::writeSettings()
+{
+	QSettings settings("NoterCompany", QCoreApplication::applicationName());
+	settings.setValue("geometry", this->geometry());
+	settings.setValue("directory", directoryPath);
+	settings.setValue("file", name);
+}
+
+void MainNoter::loadSettings()
+{
+	QSettings settings("NoterCompany", QCoreApplication::applicationName());
+	setGeometry(settings.value("geometry").toRect());
+	directoryPath = settings.value("directory", QDir::homePath()).toString();
+	name = settings.value("file").toString();
+}
+
 // Zoom
 void MainNoter::wheelEvent(QWheelEvent *event)
 {
@@ -396,6 +442,16 @@ void MainNoter::wheelEvent(QWheelEvent *event)
 		}
 		//qDebug() << zoomValue;
 	}
+}
+
+void MainNoter::closeEvent(QCloseEvent *event)
+{
+	writeSettings();
+
+	if (maybeSave())
+		event->accept();
+	else
+		event->ignore();
 }
 
 // CTRL + + or

@@ -4,6 +4,7 @@
 #include <QListWidgetItem>
 #include <QDir>
 #include <QWheelEvent>
+#include <QCloseEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainNoter; }
@@ -49,10 +50,20 @@ private:
 	int zoomValue = 0; // If the text is bigger it is a positive number, otherwise negative
 
 	void showFilesInDir(QDir directory);
+	void openFile();
+	void lastOpenedFile();
+	void openOperations(QFile &file);
+	void save();
+	void saveAs();
+	void saveOperations(QFile &file);
 	bool findWord(const QString &word, bool caseSensitive, bool wholeWords, int backwardOrForward);
 	bool replaceWord(const QString &oldWord, const QString &newWord, bool caseSensitive, bool wholeWords, int backwardOrForward);
+	bool maybeSave();
+	void writeSettings();
+	void loadSettings();
 
 protected:
 	void wheelEvent(QWheelEvent *event);
+	void closeEvent(QCloseEvent *event);
 
 };
