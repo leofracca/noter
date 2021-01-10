@@ -4,7 +4,7 @@
   <img src="https://img.shields.io/badge/powered%20by-Qt-green">
   <img src="https://img.shields.io/badge/status-beta-blue">
 </p>
-Noter is an open source text editor written in C++, using Qt.
+Noter is an open source text editor written in C++, using Qt.<br \>
 With Noter you can work on text files and do the essential operations like create, open, modify or save a file.
 
 ## Features
