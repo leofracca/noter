@@ -43,6 +43,8 @@ private slots:
 	void receiveWordsToReplace(const QString &oldWord, const QString &newWord, bool caseSensitive, bool wholeWords, int backwardOrForward);
 	void receiveWordsToReplaceAll(const QString &oldWord, const QString &newWord, bool caseSensitive, bool wholeWords);
 
+	void on_actionAbout_Noter_triggered();
+
 private:
 	Ui::MainNoter *ui;
 	QString name; // Of the file

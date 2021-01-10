@@ -481,3 +481,28 @@ void MainNoter::on_actionDefault_zoom_triggered()
 
 	zoomValue = 0;
 }
+
+void MainNoter::on_actionAbout_Noter_triggered()
+{
+	QString translatedTextAboutQtCaption;
+	translatedTextAboutQtCaption = QMessageBox::tr(
+				"<h3>About Noter</h3>"
+			"<p>This program uses Qt version %1.</p>"
+			).arg(QLatin1String(QT_VERSION_STR));
+
+	QString translatedTextAboutQtText;
+	translatedTextAboutQtText = QMessageBox::tr(
+				"<p>Noter is an open source text editor written in C++, using Qt.<br />"
+			"With Noter you can work on text files and do the essential operations like create, open, modify or save a file.</p>"
+			"<p>Noter is available under the MIT License.</p>"
+			"<p>For the source code see <a href=\"https://github.com/leofracca/noter/\">the github repository</a>.</p>"
+			);
+
+	QMessageBox *msgBox = new QMessageBox(this);
+	msgBox->setAttribute(Qt::WA_DeleteOnClose);
+	msgBox->setWindowTitle(tr("About Noter"));
+	msgBox->setText(translatedTextAboutQtCaption);
+	msgBox->setInformativeText(translatedTextAboutQtText);
+
+	msgBox->show();
+}
