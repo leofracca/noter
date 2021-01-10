@@ -5,12 +5,7 @@
   <img src="https://img.shields.io/badge/status-beta-blue">
 </p>
 Noter is an open source text editor written in C++, using Qt.
-
-## What Noter can do
-- Create a file
-- Open a file
-- Modify a file
-- Save a file
+With Noter you can work on text files and do the essential operations like create, open, modify or save a file.
 
 ## Features
 Noter includes the basic features that all text editors have.
@@ -27,7 +22,6 @@ Noter includes the basic features that all text editors have.
 ## TODO
 - Font selections (type, size, ...)
 - About dialog
-- Ask for exit if there are unsaved files
 
 ## Others
 I made this project during my free time.
