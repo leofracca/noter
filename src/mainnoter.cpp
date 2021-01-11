@@ -47,7 +47,10 @@ void MainNoter::on_actionNew_File_triggered()
 // Open toolbar icon
 void MainNoter::on_actionOpen_File_triggered()
 {
-	openFile();
+	if (maybeSave())
+		openFile();
+	else
+		return;
 }
 
 void MainNoter::openFile()
@@ -322,6 +325,9 @@ void MainNoter::on_actionUnderlined_triggered()
 // Double click an item on the list
 void MainNoter::on_listNotes_itemDoubleClicked(QListWidgetItem *item)
 {
+	if (item->text().compare(name) == 0)
+		return;
+
 	if (maybeSave())
 	{
 		// Open the double-clicked item
@@ -354,8 +360,8 @@ void MainNoter::showFilesInDir(QDir directory)
 		if (var.isFile() &&
 		        (var.fileName().endsWith(".txt") ||
 		         var.fileName().endsWith(".xml")
-		         )
 		        )
+		    )
 		{
 			ui->listNotes->addItem(var.fileName());
 		}
@@ -392,12 +398,14 @@ bool MainNoter::replaceWord(const QString &oldWord, const QString &newWord, bool
 	return false;
 }
 
+// This function is used to know when a file has been modified
 bool MainNoter::maybeSave()
 {
 	if (!ui->textNote->document()->isModified())
 		return true;
 
-	const QMessageBox::StandardButton ret = QMessageBox::warning(this, tr("Application"),
+	const QMessageBox::StandardButton ret = QMessageBox::warning(this,
+	                                                             tr("Application"),
 	                                                             tr("The document has been modified.\nDo you want to save your changes?"),
 	                                                             QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
 
@@ -414,20 +422,29 @@ bool MainNoter::maybeSave()
 	return true;
 }
 
+// Save the actual settings
 void MainNoter::writeSettings()
 {
 	QSettings settings("NoterCompany", QCoreApplication::applicationName());
 
+	isMaximized = windowState().testFlag(Qt::WindowMaximized);
+	settings.setValue("isMaximized", isMaximized);
 	settings.setValue("geometry", this->geometry());
 	settings.setValue("directory", directoryPath);
 	settings.setValue("file", name);
 }
 
+// Load the previous settings
 void MainNoter::loadSettings()
 {
 	QSettings settings("NoterCompany", QCoreApplication::applicationName());
 
-	setGeometry(settings.value("geometry").toRect());
+	isMaximized = settings.value("isMaximized", false).toBool();
+
+	if (isMaximized)
+		QWidget::showMaximized();
+	else
+		setGeometry(settings.value("geometry").toRect());
 
 	directoryPath = settings.value("directory", QDir::homePath()).toString();
 	name = settings.value("file").toString();
@@ -457,6 +474,7 @@ void MainNoter::wheelEvent(QWheelEvent *event)
 	}
 }
 
+// Handle the close input
 void MainNoter::closeEvent(QCloseEvent *event)
 {
 	writeSettings();
@@ -495,6 +513,7 @@ void MainNoter::on_actionDefault_zoom_triggered()
 	zoomValue = 0;
 }
 
+// About dialog
 void MainNoter::on_actionAbout_Noter_triggered()
 {
 	QString translatedTextAboutQtCaption;

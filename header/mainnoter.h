@@ -50,6 +50,7 @@ private:
 	QString name; // Of the file
 	QString directoryPath; // The current directory
 	int zoomValue = 0; // If the text is bigger it is a positive number, otherwise negative
+	bool isMaximized = false;
 
 	void showFilesInDir(QDir directory);
 	void openFile();
