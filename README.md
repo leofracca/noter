@@ -16,6 +16,9 @@ Noter includes the basic features that all text editors have.
 - Find a word in a text
 - Replace a word in a text
 
+## WIP
+- Delete a file
+
 ## TODO
 - Font selections (type, size, ...)
 - Implement dark theme
