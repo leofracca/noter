@@ -9,10 +9,11 @@
 #include <QMessageBox>
 #include <QBoxLayout>
 #include <QTextCursor>
-#include <QSettings>
+#include <QProcess>
 
 MainNoter::MainNoter(QWidget *parent)
     : QMainWindow(parent)
+    , settings("NoterCompany", QCoreApplication::applicationName())
     , ui(new Ui::MainNoter)
 {
 	ui->setupUi(this);
@@ -108,13 +109,6 @@ void MainNoter::on_actionSave_triggered()
 void MainNoter::on_actionSave_As_triggered()
 {
 	saveAs();
-}
-
-// CTRL + Shift + S or
-// File -> Save All
-void MainNoter::on_actionSave_All_triggered()
-{
-	// TODO
 }
 
 void MainNoter::save()
@@ -405,7 +399,7 @@ bool MainNoter::maybeSave()
 		return true;
 
 	const QMessageBox::StandardButton ret = QMessageBox::warning(this,
-	                                                             tr("Application"),
+	                                                             tr("Noter"),
 	                                                             tr("The document has been modified.\nDo you want to save your changes?"),
 	                                                             QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
 
@@ -425,20 +419,17 @@ bool MainNoter::maybeSave()
 // Save the actual settings
 void MainNoter::writeSettings()
 {
-	QSettings settings("NoterCompany", QCoreApplication::applicationName());
-
 	isMaximized = windowState().testFlag(Qt::WindowMaximized);
 	settings.setValue("isMaximized", isMaximized);
 	settings.setValue("geometry", this->geometry());
 	settings.setValue("directory", directoryPath);
 	settings.setValue("file", name);
+	settings.setValue("darkThemeEnabled", darkThemeEnabled);
 }
 
 // Load the previous settings
 void MainNoter::loadSettings()
 {
-	QSettings settings("NoterCompany", QCoreApplication::applicationName());
-
 	isMaximized = settings.value("isMaximized", false).toBool();
 
 	if (isMaximized)
@@ -537,4 +528,28 @@ void MainNoter::on_actionAbout_Noter_triggered()
 	msgBox->setInformativeText(translatedTextAboutQtText);
 
 	msgBox->show();
+}
+
+// Enable or disable dark theme
+void MainNoter::on_actionChange_Theme_triggered()
+{
+	// If the user clicks it, then it changes the current theme
+	darkThemeEnabled = !darkThemeEnabled;
+	writeSettings();
+
+	const QMessageBox::StandardButton reboot = QMessageBox::warning(this,
+	                                                                tr("Noter"),
+	                                                                tr("To change the theme, Noter must be restarted.\nDo you want to restart Noter?"),
+	                                                                QMessageBox::Ok | QMessageBox::Cancel);
+
+	switch (reboot)
+	{
+		case QMessageBox::Ok:
+			// restart:
+			qApp->quit();
+			QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+			break;
+		default:
+			break;
+	}
 }

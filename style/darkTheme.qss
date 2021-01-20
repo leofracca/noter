@@ -1,0 +1,103 @@
+QWidget {
+    background-color: #212121;
+	color: #fafafa;
+}
+
+/*----------*/
+/* QMenuBar */
+/*----------*/
+
+QMenuBar {
+    background-color: #212121;
+}
+
+QMenuBar:focus {
+    background-color: #2e7cbf;
+}
+
+QMenuBar::item {
+    background: transparent;
+}
+
+QMenuBar::item:selected {
+    background: #2e7cbf;
+}
+
+QMenuBar::item:pressed {
+    background-color: #2e7cbf;
+}
+
+/*----------*/
+/* QMenuBar */
+/*----------*/
+
+QMenu::item:selected {
+    background-color: #2e7cbf;
+}
+
+/*----------*/
+/* QToolBar */
+/*----------*/
+
+QToolBar {
+    background-color: #121212;
+}
+
+QToolBar QToolButton {
+  background-color: #121212;
+}
+
+QToolBar QToolButton:hover {
+  border: 1px solid #a3d5ff;
+}
+
+QToolBar QToolButton:checked {
+  background-color: #ffffff;
+}
+
+QToolBar QToolButton:checked:hover {
+  border: 1px solid #a3d5ff;
+}
+
+QToolBar::separator {
+	color: #e0e0e0;
+}
+
+QToolBar::handle {
+	color: #e0e0e0;
+}
+
+/*--------------------------------*/
+/* QPlainTextEdit and QListWidget */
+/*--------------------------------*/
+
+QPlainTextEdit, QListWidget {
+    background-color: #303030;
+}
+
+/*-------------*/
+/* QPushButton */
+/*-------------*/
+
+QPushButton {
+	color: #e0e0e0;
+	background-color: #303030;
+    border-color: #505050;
+}
+
+/*-----------*/
+/* QLineEdit */
+/*-----------*/
+
+QLineEdit {
+	background-color: #303030;
+	border: 1px solid #505050;
+}
+
+QLineEdit:hover {
+  border: 1px solid #a3d5ff;
+}
+
+QLineEdit:focus {
+  border: 1px solid #167ecc;
+}

@@ -197,13 +197,13 @@
  <tabstops>
   <tabstop>findLine</tabstop>
   <tabstop>replaceLine</tabstop>
+  <tabstop>findBtn</tabstop>
+  <tabstop>replaceBtn</tabstop>
+  <tabstop>replaceAllBtn</tabstop>
   <tabstop>caseSensitiveCB</tabstop>
   <tabstop>wholeWordsCB</tabstop>
   <tabstop>backwardBtn</tabstop>
   <tabstop>forwardBtn</tabstop>
-  <tabstop>findBtn</tabstop>
-  <tabstop>replaceBtn</tabstop>
-  <tabstop>replaceAllBtn</tabstop>
  </tabstops>
  <resources/>
  <connections/>

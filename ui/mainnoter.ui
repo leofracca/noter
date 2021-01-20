@@ -77,15 +77,22 @@
     <property name="title">
      <string>File</string>
     </property>
+    <widget class="QMenu" name="menuAppereance">
+     <property name="title">
+      <string>Appereance</string>
+     </property>
+     <addaction name="actionChange_Theme"/>
+    </widget>
     <addaction name="actionNew_File"/>
     <addaction name="actionOpen_File"/>
     <addaction name="actionOpen_Directory"/>
     <addaction name="separator"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
-    <addaction name="actionSave_All"/>
     <addaction name="separator"/>
     <addaction name="actionDelete"/>
+    <addaction name="separator"/>
+    <addaction name="menuAppereance"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
@@ -195,14 +202,6 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
-   </property>
-  </action>
-  <action name="actionSave_All">
-   <property name="text">
-    <string>Save All</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Shift+S</string>
    </property>
   </action>
   <action name="actionCopy">
@@ -368,6 +367,14 @@
   <action name="actionAbout_Noter">
    <property name="text">
     <string>About Noter</string>
+   </property>
+  </action>
+  <action name="actionChange_Theme">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Change Theme</string>
    </property>
   </action>
  </widget>
