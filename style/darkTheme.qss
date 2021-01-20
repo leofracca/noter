@@ -1,6 +1,6 @@
 QWidget {
     background-color: #212121;
-	color: #fafafa;
+    color: #fafafa;
 }
 
 /*----------*/
@@ -28,7 +28,7 @@ QMenuBar::item:pressed {
 }
 
 /*----------*/
-/* QMenuBar */
+/* QMenu */
 /*----------*/
 
 QMenu::item:selected {
@@ -44,27 +44,27 @@ QToolBar {
 }
 
 QToolBar QToolButton {
-  background-color: #121212;
+    background-color: #121212;
 }
 
 QToolBar QToolButton:hover {
-  border: 1px solid #a3d5ff;
+    border: 1px solid #a3d5ff;
 }
 
 QToolBar QToolButton:checked {
-  background-color: #ffffff;
+    background-color: #ffffff;
 }
 
 QToolBar QToolButton:checked:hover {
-  border: 1px solid #a3d5ff;
+    border: 1px solid #a3d5ff;
 }
 
 QToolBar::separator {
-	color: #e0e0e0;
+    color: #e0e0e0;
 }
 
 QToolBar::handle {
-	color: #e0e0e0;
+    color: #e0e0e0;
 }
 
 /*--------------------------------*/
@@ -80,8 +80,8 @@ QPlainTextEdit, QListWidget {
 /*-------------*/
 
 QPushButton {
-	color: #e0e0e0;
-	background-color: #303030;
+    color: #e0e0e0;
+    background-color: #303030;
     border-color: #505050;
 }
 
@@ -90,14 +90,14 @@ QPushButton {
 /*-----------*/
 
 QLineEdit {
-	background-color: #303030;
-	border: 1px solid #505050;
+    background-color: #303030;
+    border: 1px solid #505050;
 }
 
 QLineEdit:hover {
-  border: 1px solid #a3d5ff;
+    border: 1px solid #a3d5ff;
 }
 
 QLineEdit:focus {
-  border: 1px solid #167ecc;
+    border: 1px solid #167ecc;
 }
