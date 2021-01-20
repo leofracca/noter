@@ -21,8 +21,8 @@ Noter includes the basic features that all text editors have.
 
 ## TODO
 - Font selections (type, size, ...)
-- Implement dark theme
 - Find with \<your browser>
+- Add undo, redo, zoom in and zoom out toolbar icons
 
 ## Others
 I made this project during my free time.
