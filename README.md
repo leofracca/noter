@@ -16,6 +16,13 @@ Noter includes the basic features that all text editors have.
 - Find/replace a words in a text
 - Font selections (type, size, ...)
 
+## Images
+<p align='center'>
+  <img src='https://github.com/leofracca/noter/blob/main/docs/Noter.PNG' width='90%'/>
+  <img src='https://github.com/leofracca/noter/blob/main/docs/options.PNG' width='90%'/>
+  <img src='https://github.com/leofracca/noter/blob/main/docs/NoterDark.PNG' width='90%'/>
+</p>
+
 ## WIP
 - Delete a file
 
