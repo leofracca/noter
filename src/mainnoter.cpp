@@ -10,6 +10,7 @@
 #include <QBoxLayout>
 #include <QTextCursor>
 #include <QProcess>
+#include <QFontDialog>
 
 MainNoter::MainNoter(QWidget *parent)
     : QMainWindow(parent)
@@ -424,7 +425,6 @@ void MainNoter::writeSettings()
 	settings.setValue("geometry", this->geometry());
 	settings.setValue("directory", directoryPath);
 	settings.setValue("file", name);
-	settings.setValue("darkThemeEnabled", darkThemeEnabled);
 }
 
 // Load the previous settings
@@ -439,6 +439,12 @@ void MainNoter::loadSettings()
 
 	directoryPath = settings.value("directory", QDir::homePath()).toString();
 	name = settings.value("file").toString();
+
+	QStringList fontSettings = settings.value("font").toString().split(",");
+	// fontSettings[0] --> the font
+	// fontSettings[1] --> the size of the font
+
+	ui->textNote->setFont(QFont(fontSettings[0], fontSettings[1].toInt()));
 }
 
 // Zoom
@@ -535,7 +541,7 @@ void MainNoter::on_actionChange_Theme_triggered()
 {
 	// If the user clicks it, then it changes the current theme
 	darkThemeEnabled = !darkThemeEnabled;
-	writeSettings();
+	settings.setValue("darkThemeEnabled", darkThemeEnabled);
 
 	const QMessageBox::StandardButton reboot = QMessageBox::warning(this,
 	                                                                tr("Noter"),
@@ -551,5 +557,23 @@ void MainNoter::on_actionChange_Theme_triggered()
 			break;
 		default:
 			break;
+	}
+}
+
+// Open the font selection dialog
+void MainNoter::on_actionFont_triggered()
+{
+	QStringList fontSettings = settings.value("font").toString().split(",");
+	// fontSettings[0] --> the font
+	// fontSettings[1] --> the size of the font
+
+	bool ok;
+
+	font = QFontDialog::getFont(&ok, QFont(fontSettings[0], fontSettings[1].toInt()), this);
+
+	if (ok)
+	{
+		ui->textNote->setFont(font);
+		settings.setValue("font", font);
 	}
 }

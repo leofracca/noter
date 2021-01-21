@@ -108,15 +108,15 @@
     <addaction name="actionFind"/>
     <addaction name="actionReplace"/>
    </widget>
-   <widget class="QMenu" name="menuFont">
+   <widget class="QMenu" name="menuFormat">
     <property name="title">
-     <string>Font</string>
+     <string>Format</string>
     </property>
     <addaction name="actionBold"/>
     <addaction name="actionItalic"/>
     <addaction name="actionUnderlined"/>
     <addaction name="separator"/>
-    <addaction name="actionSize"/>
+    <addaction name="actionFont"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -140,7 +140,7 @@
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
-   <addaction name="menuFont"/>
+   <addaction name="menuFormat"/>
    <addaction name="menuView"/>
    <addaction name="menuAbout"/>
   </widget>
@@ -286,9 +286,9 @@
     <string>Ctrl+I</string>
    </property>
   </action>
-  <action name="actionSize">
+  <action name="actionFont">
    <property name="text">
-    <string>Size</string>
+    <string>Font</string>
    </property>
   </action>
   <action name="actionUnderlined">

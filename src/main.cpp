@@ -7,7 +7,6 @@ int main(int argc, char *argv[])
 	QApplication a(argc, argv);
 	MainNoter w;
 
-	//QSettings settings("NoterCompany", QCoreApplication::applicationName());
 	w.darkThemeEnabled = w.settings.value("darkThemeEnabled", false).toBool();
 
 	QString styleSheet;

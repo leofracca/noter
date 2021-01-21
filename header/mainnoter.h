@@ -6,6 +6,7 @@
 #include <QDir>
 #include <QWheelEvent>
 #include <QCloseEvent>
+#include <QFont>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainNoter; }
@@ -48,6 +49,7 @@ private slots:
 	void receiveWordsToReplaceAll(const QString &oldWord, const QString &newWord, bool caseSensitive, bool wholeWords);
 	void on_actionAbout_Noter_triggered();
 	void on_actionChange_Theme_triggered();
+	void on_actionFont_triggered();
 
 private:
 	Ui::MainNoter *ui;
@@ -55,6 +57,7 @@ private:
 	QString directoryPath; // The current directory
 	int zoomValue = 0; // If the text is bigger it is a positive number, otherwise negative
 	bool isMaximized = false;
+	QFont font;
 
 	void showFilesInDir(QDir directory);
 	void openFile();
