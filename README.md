@@ -2,7 +2,7 @@
 <p align="center">
   <img src="https://img.shields.io/github/license/leofracca/noter">
   <img src="https://img.shields.io/badge/powered%20by-Qt-green">
-  <img src="https://img.shields.io/badge/status-beta-blue">
+  <img src="https://img.shields.io/badge/status-stable-blue">
 </p>
 Noter is an open source text editor written in C++, using Qt.<br \>
 With Noter you can work on text files and do the essential operations like create, open, modify or save a file.
@@ -13,14 +13,13 @@ Noter includes the basic features that all text editors have.
 - Copy, cut and paste
 - Zoom-in and zoom-out
 - All the .txt and .xml files in the current directory are visible on a sidebar and it's possible to open them with a double click
-- Find a word in a text
-- Replace a word in a text
+- Find/replace a words in a text
+- Font selections (type, size, ...)
 
 ## WIP
 - Delete a file
 
 ## TODO
-- Font selections (type, size, ...)
 - Find with \<your browser>
 - Add undo, redo, zoom in and zoom out toolbar icons
 
