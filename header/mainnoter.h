@@ -50,6 +50,9 @@ private slots:
 	void on_actionAbout_Noter_triggered();
 	void on_actionChange_Theme_triggered();
 	void on_actionFont_triggered();
+	void on_actionSearch_on_Internet_triggered();
+	void on_actionSelect_Search_Engine_triggered();
+	void receiveEnginePrefix(const QString &enginePrefix, int engineId);
 
 private:
 	Ui::MainNoter *ui;
@@ -58,6 +61,7 @@ private:
 	int zoomValue = 0; // If the text is bigger it is a positive number, otherwise negative
 	bool isMaximized = false;
 	QFont font;
+	QString defaultEngine = "https://www.google.com/search?q=";
 
 	void showFilesInDir(QDir directory);
 	void openFile();

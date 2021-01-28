@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SearchEngineDialog</class>
+ <widget class="QDialog" name="SearchEngineDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>564</width>
+    <height>309</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Search Engine</string>
+  </property>
+  <widget class="QGroupBox" name="searchEngineBox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>331</width>
+     <height>291</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Search Engine</string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QRadioButton" name="bingRadioButton">
+      <property name="text">
+       <string>Bing</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">searchEngineGroup</string>
+      </attribute>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="ddgRadioButton">
+      <property name="text">
+       <string>DuckDuckGo</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">searchEngineGroup</string>
+      </attribute>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="ecosiaRadioButton">
+      <property name="text">
+       <string>Ecosia</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">searchEngineGroup</string>
+      </attribute>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="googleRadioButton">
+      <property name="text">
+       <string>Google</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">searchEngineGroup</string>
+      </attribute>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="wikipediaRadioButton">
+      <property name="text">
+       <string>Wikipedia</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">searchEngineGroup</string>
+      </attribute>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="yahooRadioButton">
+      <property name="text">
+       <string>Yahoo!</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">searchEngineGroup</string>
+      </attribute>
+     </widget>
+    </item>
+    <item>
+     <widget class="QRadioButton" name="otherRadioButton">
+      <property name="text">
+       <string>Other (specify)</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">searchEngineGroup</string>
+      </attribute>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="otherLineEdit">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+   <zorder>googleRadioButton</zorder>
+   <zorder>yahooRadioButton</zorder>
+   <zorder>ddgRadioButton</zorder>
+   <zorder>ecosiaRadioButton</zorder>
+   <zorder>bingRadioButton</zorder>
+   <zorder>wikipediaRadioButton</zorder>
+   <zorder>otherRadioButton</zorder>
+   <zorder>otherLineEdit</zorder>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>272</y>
+     <width>195</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QPushButton" name="applyBtn">
+      <property name="text">
+       <string>Apply</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="closeBtn">
+      <property name="text">
+       <string>Close</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>bingRadioButton</tabstop>
+  <tabstop>ddgRadioButton</tabstop>
+  <tabstop>ecosiaRadioButton</tabstop>
+  <tabstop>googleRadioButton</tabstop>
+  <tabstop>wikipediaRadioButton</tabstop>
+  <tabstop>yahooRadioButton</tabstop>
+  <tabstop>otherRadioButton</tabstop>
+  <tabstop>otherLineEdit</tabstop>
+  <tabstop>applyBtn</tabstop>
+  <tabstop>closeBtn</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+ <buttongroups>
+  <buttongroup name="searchEngineGroup"/>
+ </buttongroups>
+</ui>

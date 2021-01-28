@@ -107,6 +107,9 @@
     <addaction name="separator"/>
     <addaction name="actionFind"/>
     <addaction name="actionReplace"/>
+    <addaction name="separator"/>
+    <addaction name="actionSearch_on_Internet"/>
+    <addaction name="actionSelect_Search_Engine"/>
    </widget>
    <widget class="QMenu" name="menuFormat">
     <property name="title">
@@ -375,6 +378,16 @@
    </property>
    <property name="text">
     <string>Change Theme</string>
+   </property>
+  </action>
+  <action name="actionSearch_on_Internet">
+   <property name="text">
+    <string>Search on Internet</string>
+   </property>
+  </action>
+  <action name="actionSelect_Search_Engine">
+   <property name="text">
+    <string>Select Search Engine</string>
    </property>
   </action>
  </widget>

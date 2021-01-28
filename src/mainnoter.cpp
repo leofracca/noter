@@ -2,6 +2,7 @@
 #include "ui_mainnoter.h"
 #include "finddialog.h"
 #include "replacedialog.h"
+#include "searchenginedialog.h"
 
 #include <QFileDialog>
 #include <QFile>
@@ -11,6 +12,8 @@
 #include <QTextCursor>
 #include <QProcess>
 #include <QFontDialog>
+#include <QDesktopServices>
+#include <QUrl>
 
 MainNoter::MainNoter(QWidget *parent)
     : QMainWindow(parent)
@@ -576,4 +579,33 @@ void MainNoter::on_actionFont_triggered()
 		ui->textNote->setFont(font);
 		settings.setValue("font", font);
 	}
+}
+
+// Search the selected text on the web
+void MainNoter::on_actionSearch_on_Internet_triggered()
+{
+	QString prefix = settings.value("enginePrefix", "https://www.google.com/search?q=").toString();
+	QString search = ui->textNote->textCursor().selectedText();
+
+	// Check if it is possible to open the url with the chosen prefix
+	// If not, then open it with the default engine (Google)
+	if (!QDesktopServices::openUrl(QUrl(prefix + QUrl::toPercentEncoding(search))))
+		QDesktopServices::openUrl(QUrl(defaultEngine + QUrl::toPercentEncoding(search)));
+}
+
+// Open a dialog for the selection of the search engine
+void MainNoter::on_actionSelect_Search_Engine_triggered()
+{
+	SearchEngineDialog *searchEngineDialog = new SearchEngineDialog(this);
+	connect(searchEngineDialog, SIGNAL(sendEnginePrefix(const QString &, int)), this, SLOT(receiveEnginePrefix(const QString &, int)));
+	searchEngineDialog->setModal(false);
+
+
+	searchEngineDialog->show();
+}
+
+void MainNoter::receiveEnginePrefix(const QString &enginePrefix, int engineId)
+{
+	settings.setValue("enginePrefix", enginePrefix);
+	settings.setValue("engineId", engineId);
 }
